@@ -1,4 +1,3 @@
-use core::marker::PhantomData;
 use core::sync::atomic::{AtomicBool, Ordering};
 
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
@@ -29,11 +28,7 @@ impl NorFlashError for FlashError {
     }
 }
 
-/// Singleton instance of the Flash softdevice functionality.
-pub struct Flash {
-    // Prevent Send, Sync
-    _private: PhantomData<*mut ()>,
-}
+pub struct Flash {}
 
 static FLASH_TAKEN: AtomicBool = AtomicBool::new(false);
 
@@ -53,7 +48,7 @@ impl Flash {
             panic!("nrf_softdevice::Softdevice::take_flash() called multiple times.")
         }
 
-        Flash { _private: PhantomData }
+        Flash {}
     }
 }
 
